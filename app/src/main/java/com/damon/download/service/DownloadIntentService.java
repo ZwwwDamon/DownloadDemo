@@ -62,18 +62,19 @@ public class DownloadIntentService extends IntentService {
 
         final RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.notify_download);
         remoteViews.setProgressBar(R.id.pb_progress, 100, progress, false);
-
+        remoteViews.setTextViewText(R.id.tv_progress, "已下载" + progress + "%");
 
         final NotificationCompat.Builder builder =
                 new NotificationCompat.Builder(this)
                         .setContent(remoteViews)
+                        .setTicker("正在下载")
                         .setSmallIcon(R.mipmap.ic_launcher);
 
         mNotification = builder.build();
 
-
         mNotifyManager = (NotificationManager)
                 getSystemService(Context.NOTIFICATION_SERVICE);
+        mNotifyManager.notify(downloadId, mNotification);
 
         RetrofitHttp.getInstance().downloadFile(range, downloadUrl, mDownloadFileName, new DownloadCallBack() {
             @Override
