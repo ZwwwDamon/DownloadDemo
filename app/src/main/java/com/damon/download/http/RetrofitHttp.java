@@ -110,11 +110,9 @@ public class RetrofitHttp {
                                 progress = (int) (total * 100 / randomAccessFile.length());
                                 if (progress > 0 && progress != lastProgress) {
                                     downloadCallback.onProgress(progress);
-                                    if (100 == progress) {
-                                        downloadCallback.onCompleted();
-                                    }
                                 }
                             }
+                            downloadCallback.onCompleted();
                         } catch (Exception e) {
                             Log.d(TAG, e.getMessage());
                             downloadCallback.onError(e.getMessage());
