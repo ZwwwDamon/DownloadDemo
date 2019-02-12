@@ -106,6 +106,7 @@ public class RetrofitHttp {
                             while ((len = inputStream.read(buf)) != -1) {
                                 randomAccessFile.write(buf, 0, len);
                                 total += len;
+                                SPDownloadUtil.getInstance().save(url, total);
                                 lastProgress = progress;
                                 progress = (int) (total * 100 / randomAccessFile.length());
                                 if (progress > 0 && progress != lastProgress) {
@@ -119,7 +120,6 @@ public class RetrofitHttp {
                             e.printStackTrace();
                         } finally {
                             try {
-                                SPDownloadUtil.getInstance().save(url, total);
                                 if (randomAccessFile != null) {
                                     randomAccessFile.close();
                                 }
